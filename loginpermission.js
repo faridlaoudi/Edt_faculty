@@ -1,14 +1,12 @@
-const express = require('express');
-const app = express();
+require('./config/db');
+const app = require('express')();
+const port = 3000;
+const UserRouter = require('./api/User');
 
-app.use(express.json());
+const bodyParser = require('express').json;
+app.use(bodyParser());
+app.use('/user', UserRouter);
 
-app.get("/login", (req, res) => {
-    res.json("Login raw ymchi");
-});
-app.get("/permission", (req, res) => {
-    res.json("Permission");
-});
-app.listen(3001, () => {
-    console.log("Server is running on port 3001");
+app.listen(port, () => {
+    console.log(`Server is running on port: ${port}`);
 });
