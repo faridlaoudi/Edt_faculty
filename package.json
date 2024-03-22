@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "login.js",
+  "type": "module",
   "scripts": {
-    "devStart": "nodemon login.js"
+    "start": "nodemon login.js"
   },
   "keywords": [],
   "author": "",
