@@ -52,25 +52,19 @@ app.post("/login", async (req, res) => {
     }
     const passwordMatch = await bcrypt.compare(password, findUser.password);
     if(passwordMatch) {
-        res.status(200).send("Logged in successfully!")
-    } else {
-        res.status(400).send("Wrong email or password !");
-    }
+        res.status(200).send("Logged in successfully!");
+        if (findUser.role === 'admin') {
+          res.redirect("/admin"); 
+        }else if (findUser.role === 'teacher') {
+          res.redirect("/teacher");
+        }else if (findUser.role === 'student') {
+          res.redirect("/student");
+        } else {
+            res.status(400).send("Wrong email or password !");
+        }
+    } 
   } catch (err) {
     res.status(500).send({ message: err.message });
-  }
-  switch(user.role) {
-    case 'admin':
-      res.redirect("/admin");
-      break;
-    case 'teacher':
-      res.redirect('/teacher');
-      break;
-    case 'student':
-      res.redirect('/student');
-      break;
-    default:
-      res.status(500).json({ message: 'Invalid role' });
   }
 });
 
