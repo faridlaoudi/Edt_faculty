@@ -59,6 +59,19 @@ app.post("/login", async (req, res) => {
   } catch (err) {
     res.status(500).send({ message: err.message });
   }
+  switch(user.role) {
+    case 'admin':
+      res.redirect("/admin");
+      break;
+    case 'teacher':
+      res.redirect('/teacher');
+      break;
+    case 'student':
+      res.redirect('/student');
+      break;
+    default:
+      res.status(500).json({ message: 'Invalid role' });
+  }
 });
 
 app.listen(port, () => {
