@@ -1,10 +1,6 @@
 'use strict'
 
-/**
- * Module dependencies.
- */
-
-var express = require('../..');
+var express = require('express');
 var hash = require('pbkdf2-password')()
 var path = require('path');
 var session = require('express-session');
@@ -22,7 +18,7 @@ app.use(express.urlencoded({ extended: false }))
 app.use(session({
   resave: false, // don't save session if unmodified
   saveUninitialized: false, // don't create session until something stored
-  secret: 'shhhh, very secret'
+  secret: 'very secret'
 }));
 
 // Session-persisted message middleware
@@ -41,7 +37,7 @@ app.use(function(req, res, next){
 // dummy database
 
 var users = {
-  tj: { name: 'tj' }
+  farid: { name: 'admin' }
 };
 
 // when you create a user, generate a salt
@@ -50,8 +46,8 @@ var users = {
 hash({ password: 'foobar' }, function (err, pass, salt, hash) {
   if (err) throw err;
   // store the salt & hash in the "db"
-  users.tj.salt = salt;
-  users.tj.hash = hash;
+  users.farid.salt = salt;
+  users.farid.hash = hash;
 });
 
 
