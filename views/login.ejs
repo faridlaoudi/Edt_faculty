@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title><%= title %></title>
+    <title>Authentication Example</title>
     <style>
       body {
         padding: 50px;
@@ -20,7 +20,6 @@
   <body>
     <h1>Login</h1>
     <%- message %>
-    Try accessing <a href="/enter">enter</a>, then authenticate with "tj" and "foobar".
     <form method="post" action="/login">
       <p>
         <label for="username">Username:</label>
@@ -31,8 +30,13 @@
         <input type="text" name="password" id="password">
       </p>
       <p>
-        <input type="submit" value="Login">
-      </p>
+        <input type="submit" value="Login" onclick="redirectToRestricted()">
+    </p>
     </form>
+    <script>
+      function redirectToRestricted() {
+          window.location.href = '/restricted';
+      }
+      </script>
   </body>
 </html>

@@ -1,9 +1,11 @@
 'use strict'
 
-var express = require('express');
-var hash = require('pbkdf2-password')()
-var path = require('path');
-var session = require('express-session');
+const express = require('express');
+const hash = require('pbkdf2-password')()
+const path = require('path');
+const session = require('express-session');
+const jwt = require('jsonwebtoken');
+
 
 var app = module.exports = express();
 
@@ -41,9 +43,8 @@ var users = {
 };
 
 // when you create a user, generate a salt
-// and hash the password ('foobar' is the pass here)
 
-hash({ password: 'foobar' }, function (err, pass, salt, hash) {
+hash({ password: '123456' }, function (err, pass, salt, hash) {
   if (err) throw err;
   // store the salt & hash in the "db"
   users.farid.salt = salt;
@@ -111,12 +112,11 @@ app.post('/login', function (req, res, next) {
         req.session.success = 'Authenticated as ' + user.name
           + ' click to <a href="/logout">logout</a>. '
           + ' You may now access <a href="/restricted">/restricted</a>.';
-        res.redirect('back');
+        res.redirect('/restricted');
       });
     } else {
       req.session.error = 'Authentication failed, please check your '
-        + ' username and password.'
-        + ' (use "tj" and "foobar")';
+        + ' username and password.';
       res.redirect('/login');
     }
   });
@@ -125,5 +125,5 @@ app.post('/login', function (req, res, next) {
 /* istanbul ignore next */
 if (!module.parent) {
   app.listen(3000);
-  console.log('Express started on port 3000');
+  console.log('Express started on http://localhost:3000/login');
 }
