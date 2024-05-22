@@ -1,0 +1,413 @@
+affecter a chaque salle sa disponibilite :
+
+import json
+
+# Charger les données depuis les fichiers JSON
+with open('Informatique.Salles.json', 'r') as f:
+    salles_data = json.load(f)
+
+with open('Informatique.Salles_Disponibilité.json', 'r') as f:
+    disponibilite_data = json.load(f)
+
+# Assurez-vous que les données sont triées par "_id" pour une correspondance correcte
+salles_data.sort(key=lambda x: x['_id']['$oid'])
+disponibilite_data.sort(key=lambda x: x['_id']['$oid'])
+
+# Assurer que le nombre de salles correspond au nombre de disponibilités
+assert len(salles_data) == len(disponibilite_data)
+
+# Associer chaque salle à sa disponibilité respective
+salles_with_disponibilite = []
+for salle, disponibilite in zip(salles_data, disponibilite_data):
+    salle['disponibilite'] = disponibilite['availability']
+    salles_with_disponibilite.append(salle)
+
+# Écrire les données mises à jour dans un nouveau fichier JSON
+with open('salles_with_disponibilite.json', 'w') as f:
+    json.dump(salles_with_disponibilite, f, indent=2)
+
+print("Les disponibilités ont été ajoutées aux salles avec succès.")
+# Charger les données du fichier JSON résultant
+with open('salles_with_disponibilite.json', 'r') as f:
+    salles_with_disponibilite_data = json.load(f)
+
+# Afficher le contenu du fichier JSON résultant
+print(json.dumps(salles_with_disponibilite_data, indent=2))
+
+
+generer les donnees des profs :
+
+import json
+import random
+from datetime import datetime, timedelta
+
+# Fonction pour générer une date de naissance aléatoire
+def random_date():
+    start_date = datetime(1960, 1, 1)
+    end_date = datetime(1998, 12, 31)
+    return (start_date + timedelta(seconds=random.randint(0, int((end_date - start_date).total_seconds())))).strftime('%Y-%m-%d')
+
+# Fonction pour générer une adresse email aléatoire
+def generate_email(nom, prenom):
+    email_domains = ["gmail.com", "hotmail.com", "yahoo.com", "outlook.com"]
+    email = f"{nom.lower()}.{prenom.lower()}@{random.choice(email_domains)}"
+    return email
+
+# Fonction pour générer les données des professeurs
+def generate_professor_data():
+    prenoms_feminins = ["Aïcha", "Amal", "Amina", "Anissa", "Basma", "Chaima", "Dounia", "Farah", "Fatima", "Ghada", "Hafsa", "Halima", "Hanane", "Inès", "Laila", "Lamia", "Leïla", "Lina", "Malika", "Mariam", "Marwa", "Nadia", "Naima", "Nasreen", "Nawal", "Rania", "Rima", "Rizlène", "Sabrina", "Sahar", "Samira", "Sara", "Selma", "Sofia", "Souad", "Tala", "Wafa", "Yasmine", "Yasmina", "Zainab", "Zara", "Zein", "Zineb"]
+    prenoms_masculins = ["Adam", "Ahmed", "Ali", "Amir", "Anas", "Ayman", "Bilal", "Elias", "Elyes", "Fadi", "Fouad", "Habib", "Hakim", "Hamza", "Hicham", "Ibrahim", "Imad", "Ishaq", "Jamal", "Jawad", "Khaled", "Khalil", "Majid", "Mansour", "Mohamed", "Moussa", "Mustafa", "Nabil", "Nasim", "Nasir", "Omar", "Rashid", "Salim", "Sami", "Shadi", "Shahid", "Taha", "Tarek", "Wahid", "Yasser", "Youssef", "Zaid", "Ziad", "Ziyad", "Abdallah", "Abderahman", "Abdelkader", "Abdelmajid", "Abdou", "Abdelrahim", "Abderrahmane", "Abdessalam", "Abdoullah", "Abdourahman", "Abid", "Adel", "Adem", "Adil", "Afif", "Ahmad", "Akram", "Amar", "Ameen", "Amin", "Anouar", "Ayoub", "Aziz", "Badr", "Brahim", "Daoud", "Fares", "Fathi", "Hamid", "Idriss", "Ismail", "Jafar", "Khalid", "Mahdi", "Mounir", "Nasser", "Reda"]
+    noms = ["Abdelaziz", "Abdeslam", "Abdi", "Abdo", "Abid", "Abu", "Achour", "Afifi", "Aggoune", "Ahmed", "Ait", "Akkouche", "Alami", "Alouane", "Amari", "Amrani", "Antar", "Arab", "Arar", "Asfour", "Assaf", "Attar", "Aziz", "Ba", "Badawi", "Bahloul", "Bahri", "Bakir", "Baladi", "Balouch", "Barakat", "Baroudi", "Belhaj", "Belkacem", "Belkhadem", "Ben", "Benabdeljalil", "Benali", "Benamar", "Benbrahim", "Bendjeddou", "Benghalia", "Benhaddou", "Benhamed", "Benkirane", "Benmoussa", "Benmouhoub", "Bennani", "Benrahou", "Bentaleb", "Berrada", "Berrouaghia", "Besri", "Bou", "Bouchaib", "Bouchebaba", "Bouchemal", "Boucif", "Boudjema", "Boudoukhane", "Bougara", "Bouhaddi", "Bouhani", "Boujemaa", "Boulahia", "Boumedienne", "Bounoua", "Bouras", "Bourouba", "Boussaid", "Boussalem", "Chaabane", "Chabane", "Chafik", "Chahid", "Chahine", "Chaker", "Chakir", "Chalhoub", "Chami", "Chamseddine", "Charif", "Chater", "Chedid", "Chelabi", "Cherif", "Chouaib", "Daghari", "Daoud", "Daouk", "Debbeche", "Debchi", "Deghiche", "Djedid", "Djelloul", "Djemai", "Djouder", "Ech", "El", "Es", "Faouzi", "Fares", "Fassi", "Fattoum", "Ghaleb", "Ghannouchi", "Ghazal", "Ghazi", "Ghanem", "Gharbi", "Ghezzal", "Hachemi", "Haddad", "Hadj", "Hadjadj", "Hafsi", "Hajj", "Hamad", "Hamdan", "Hamdi", "Hammami", "Hammoud", "Hamouda", "Hanafi", "Harb", "Hassaine", "Hatem", "Hattab", "Hmida", "Houari"]
+
+    # Sélection aléatoire du prénom, nom et genre
+    prenom = random.choice(prenoms_feminins + prenoms_masculins)
+    if prenom in prenoms_feminins:
+        gender = "female"
+    else:
+        gender = "male"
+    nom = random.choice(noms)
+
+    # Génération de l'email
+    email = generate_email(nom, prenom)
+
+    # Génération du numéro de téléphone
+    num_telephone = f"0{random.choice(['5', '6', '7'])}{random.randint(10000000, 99999999)}"
+
+    # Génération de la date de naissance
+    date_naissance = random_date()
+
+    # Génération du grade
+    grades = [
+        "Professeur",
+        "Maître de Conférences Classe A",
+        "Maître de Conférences Classe B",
+        "Maître Assistant Classe A",
+        "Maître Assistant Classe B",
+        "Doctorant"
+    ]
+    grade = random.choice(grades)
+
+    # Génération de l'availability_prof
+    jours = ["samedi", "dimanche", "lundi", "mardi", "mercredi", "jeudi"]
+    availability_prof = random.sample(jours, random.randint(2, 4))
+
+    # Génération des modules
+    modules = random.sample([
+        "algebre", "analyse", "algo 1", "archi 1", "Introduction aux systèmes d’exploitation 1", "TCE", "Bureautique et Web",
+        "term", "strm", "physique", "strm1", "physique",
+        "Algorithmique et complexité", "proba 2", "archi 2", "algebre 3", "poo", "analyse 3", "sfsd", "Entreprenariat",
+        "algo 3", "anglais", "logique", "Analyse numerique", "proba", "si",
+        "Electronique analogique", "Electronique numérique", "anglais", "Transmissions réseaux et codage d’information", "Utilisation et administration des systèmes d’exploitation", "Algo. & structures de données ou Electromagnétisme",
+        "compilation", "Systèmes d’exploitation2", "Génie Logiciel et POO", "reseaux", "anglais", "Théorie des graphes", "option",
+        "Système d’exploitation 2", "Génie Logiciel 2", "si 2", "reseaux", "anglais", "Bases de Données 2",
+        "Administration réseaux", "Programmation Web", "Réseaux et communication sans fil", "Syst. de communication analogiques et numériques", "Systèmes de Télécom. et interopérabilité des réseaux", "Téléphonie, Téléphonie mobile et IP", "Théorie de l’info. caractérisation de la transmission",
+        "Théorie de l’ordonnancement", "Veille Technologie", "graphes et big data", "Gestion de projet", "anglais", "Stratégie de sécurité pour l’aide à la décision", "Programmation avancée", "Optimisation linéaire (option)",
+        "SPS : Système et Programmation de Scripts", "GPR : Gestion de Projet", "BIOMATH : Biomathématique", "anglais", "BIOGEN : Bioinfo et Génomique", "BIOSTAT : Biostatistique",
+        "Architectures Avancées", "Bases de données Avancées", "anglais", "Mathématiques appliquées (Analyse numérique)", "modelisation et simulation",
+        "Gestion de Projets de Logiciels", "Architecture et Administration de bases de Données", "anglais", "programmation web avancee", "Modélisation et évaluation des performances des systèmes",
+        "Traitement et analyse d’images", "Architecture des Bases de données", "anglais", "Résolution de problèmes", "Communication Multimédia",
+        "Gestion de Projet de Développement de Logiciels", "Architecture et Administration de SGBD", "anglais", "Réseaux et Protocoles", "Modélisation et Evaluation de Performances des Systèmes",
+        "Compilation : génération du code et optimisation", "Architecture et administration des réseaux", "anglais", "Résolution de problèmes", "Modélisation et évaluation des performances des systèmes",
+        "Complexité algorithmique", "Systèmes d’exploitation", "Architectures des réseaux informatiques", "Veille technologique et Bases de données avancées", "anglais", "Introduction à la sécurité informatique", "Arithmétique modulaire", "Aspects juridiques dans la sécurité informatique",
+        "TIAD : Technologies de l’IA appliquées aux données", "anadiss ( Analyse discriminante et segmentation )", "anglais", "BDABD : Bases de Données Avancées et Big Data", "TBI-SIG : Technologies Business Intelligence", "OPTDIS : Optimisation discrète", "SOLO : Solveurs pour l’optimisation", "DESIN : Décision dans l’incertain",
+        "BSD : Biométrie et Sécurisation de Données", "FD2: Fouille de Données2", "anglais", "MCA: Méthodes Conceptuelles d’Analyse", "SE: Système Embarqués", "ACP: Architecture et Calcul Parallèle", "VDRA: Visualisation de Données et réalité Augmentée",
+        "Administration et Gestion des grilles de calcul", "Calcul Embarqué", "anglais", "Construction de systèmes Parallèles", "Systèmes d'exploitation des ordinateurs multiprocesseurs", "Imagerie Médicale et Parallélisme", "Programmation Multi-Cœurs", "Techniques de modélisation en traitement du signal", "Techniques de modélisation et de traitement en mécanique des fluides",
+        "Assurance Qualité des Logiciels", "Systèmes Décisionnels et Entrepôts", "anglais", "Représentation des Connaissances", "Méthodologie et Processus de Développement de Logiciels", "Systèmes d’Information Coopératifs", "Concepts Avancés du Génie Logiciel",
+        "Visualisation de données", "Représentation de connaissances et raisonnement", "Théorie des jeux", "Gestion de projet", "Programmation réseau", "Synthèses d’images", "Systèmes d’exploitation Mobiles",
+        "Réseaux sans fil", "Calcul parallèle et grilles de calcul", "anglais", "Réseaux Mobiles", "Construction d’applications réparties", "Vision artificielle", "Systèmes d’exploitation distribués", "Réseaux et Protocoles", "Systèmes embarqués et applications en environnement mobile",
+        "Vision artificielle", "Programmation par contraintes", "anglais", "Représentation de connaissances et raisonnement 2", "Data Mining", "Recherche d’information", "Traitement automatique du langage naturel",
+        "Sécurité système avancée", "Sécurité applicative", "Sécurité et contrôle du trafic réseau", "Méthodes pratiques et outils de détection d’intrusions", "Audit de sécurité", "Modélisation des systèmes communicants", "Méthodes d’optimisation", "Programmation et sûreté des systèmes répartis"
+    ], random.randint(3, 4))
+
+    return {
+        "nom": nom,
+        "prenom": prenom,
+        "gender": gender,
+        "email": email,
+        "numero de telephone": num_telephone,
+        "Date de naissance": date_naissance,
+        "grade": grade,
+        "availability_prof": availability_prof,
+        "modules": modules
+    }
+
+# Génération des données pour 130 professeurs
+professors_data = [generate_professor_data() for _ in range(130)]
+
+# Exportation au format JSON
+with open('professors_data.json', 'w', encoding='utf-8') as f:
+    json.dump(professors_data, f, ensure_ascii=False, indent=4)
+
+print("Fichier JSON 'professors_data.json' généré avec succès!")
+
+# Lecture du fichier JSON généré
+with open('professors_data.json', 'r', encoding='utf-8') as f:
+    data = json.load(f)
+
+# Affichage du contenu
+print(data)
+
+
+generer disponibilite des salles :
+
+import json
+import random
+
+# Fonction pour générer une disponibilité aléatoire
+def generate_availability():
+    days = ["samedi", "dimanche", "lundi", "mardi", "mercredi", "jeudi"]
+    times = [
+        {"start": "8h00", "end": "9h30"},
+        {"start": "9h40", "end": "11h10"},
+        {"start": "11h20", "end": "12h50"},
+        {"start": "13h00", "end": "14h30"},
+        {"start": "14h40", "end": "16h10"},
+        {"start": "16h20", "end": "17h50"}
+    ]
+
+    # Générer un jour aléatoire
+    day = random.choice(days)
+    
+    # Générer un nombre aléatoire d'horaires (entre 2 et 4)
+    num_times = random.randint(2, 4)
+    selected_times = random.sample(times, num_times)
+
+    return {"day": day, "time": selected_times}
+
+# Générer les disponibilités pour une salle donnée
+def generate_availability_for_salle():
+    num_days = random.randint(2, 4)
+    availabilities = [generate_availability() for _ in range(num_days)]
+    return availabilities
+
+# Générer les disponibilités pour les 338 salles
+def generate_availabilities_for_all_salles(num_salles):
+    return [{"salle_id": i, "availability": generate_availability_for_salle()} for i in range(1, num_salles + 1)]
+
+# Générer le document JSON
+def generate_json_document(num_salles):
+    data = {"salles": generate_availabilities_for_all_salles(num_salles)}
+    return json.dumps(data, indent=2, ensure_ascii=False)
+
+# Générer et afficher le document JSON pour les 338 salles
+json_data = generate_json_document(338)
+print(json_data)
+
+
+
+generer les salles :
+
+    salles tp :
+
+import json
+import random
+
+# Générer les données
+salles_tp = []
+
+# Générer les salles numérotées de 126 à 132
+for i in range(126, 133):
+    salle = {
+        "nom": str(i),
+        "type": "TP",
+        "capacite": random.randint(31, 39),  # Capacité entre 31 et 39
+        "disponibilite": None
+    }
+    salles_tp.append(salle)
+
+# Générer les salles nommées de C1 à C8
+for i in range(1, 9):
+    salle = {
+        "nom": "C" + str(i),
+        "type": "TP",
+        "capacite": random.randint(31, 39),  # Capacité entre 31 et 39
+        "disponibilite": None
+    }
+    salles_tp.append(salle)
+
+# Écrire les données dans un fichier JSON
+with open('salles_tp.json', 'w') as f:
+    json.dump(salles_tp, f, indent=4)
+
+print("Fichier JSON généré avec succès.")
+# Lire le contenu du fichier JSON
+with open('salles_tp.json', 'r') as f:
+    salles_tp_data = json.load(f)
+
+print(json.dumps(salles_tp_data, indent=4))
+
+
+nv blocs :
+
+import json
+import random
+
+# Générer les données
+salles_cours = []
+
+# Générer les salles avec le nom Ri, Ei, Di où i varie de 1 à 9
+for i in range(1, 10):
+    salle_nom = "R" + str(i)
+    salle = {
+        "nom": salle_nom,
+        "type": "cours",
+        "capacite": random.randint(91, 114),  # Capacité entre 91 et 114
+        "disponibilite": None
+    }
+    salles_cours.append(salle)
+
+    salle_nom = "E" + str(i)
+    salle = {
+        "nom": salle_nom,
+        "type": "cours",
+        "capacite": random.randint(91, 114),  # Capacité entre 91 et 114
+        "disponibilite": None
+    }
+    salles_cours.append(salle)
+
+    salle_nom = "D" + str(i)
+    salle = {
+        "nom": salle_nom,
+        "type": "cours",
+        "capacite": random.randint(91, 114),  # Capacité entre 91 et 114
+        "disponibilite": None
+    }
+    salles_cours.append(salle)
+
+# Écrire les données dans un fichier JSON
+with open('salles_cours.json', 'w') as f:
+    json.dump(salles_cours, f, indent=4)
+
+print("Fichier JSON généré avec succès.")
+# Lire le contenu du fichier JSON
+with open('salles_cours.json', 'r') as f:
+    salles_cours_data = json.load(f)
+
+print(json.dumps(salles_cours_data, indent=4)
+
+
+salles td :
+
+import json
+import random
+
+# Définir le nombre souhaité de salles simples, doubles et triples
+nombre_salles_simple = 120
+nombre_salles_double = 90
+nombre_salles_triple = 60
+
+# Générer les données
+salles_td = []
+capacites_simple = [random.randint(25, 35) for _ in range(nombre_salles_simple)]
+capacites_double = [random.randint(36, 70) for _ in range(nombre_salles_double)]
+capacites_triple = [random.randint(71, 110) for _ in range(nombre_salles_triple)]
+
+for i in range(101, 101 + nombre_salles_simple):
+    salle = {
+        "nom": str(i),
+        "type": "simple",
+        "capacite": capacites_simple[i - 101],
+        "disponibilite": None
+    }
+    salles_td.append(salle)
+
+for i in range(101 + nombre_salles_simple, 101 + nombre_salles_simple + nombre_salles_double):
+    salle = {
+        "nom": str(i),
+        "type": "double",
+        "capacite": capacites_double[i - 101 - nombre_salles_simple],
+        "disponibilite": None
+    }
+    salles_td.append(salle)
+
+for i in range(101 + nombre_salles_simple + nombre_salles_double, 101 + nombre_salles_simple + nombre_salles_double + nombre_salles_triple):
+    salle = {
+        "nom": str(i),
+        "type": "triple",
+        "capacite": capacites_triple[i - 101 - nombre_salles_simple - nombre_salles_double],
+        "disponibilite": None
+    }
+    salles_td.append(salle)
+
+# Mélanger l'ordre des salles pour une répartition aléatoire
+# random.shuffle(salles_td)
+
+# Écrire les données dans un fichier JSON
+with open('salles_td.json', 'w') as f:
+    json.dump(salles_td, f, indent=4)
+
+print("Fichier JSON généré avec succès.")
+
+# Lire le contenu du fichier JSON
+with open('salles_td.json', 'r') as f:
+    salles_td_data = json.load(f)
+
+print(json.dumps(salles_td_data, indent=4))
+
+
+
+
+affecter a chaque salle sa disponibilite :
+
+
+import json
+
+# Charger les données depuis les fichiers JSON
+with open('Informatique.Salles_1.json', 'r') as f:
+    salles_data = json.load(f)
+
+with open('Informatique.dis.json', 'r') as f:
+    disponibilite_data = json.load(f)
+
+# Assurez-vous que les données sont triées par "_id" pour une correspondance correcte
+salles_data.sort(key=lambda x: x['_id']['$oid'])
+disponibilite_data.sort(key=lambda x: x['_id']['$oid'])
+
+# Assurer que le nombre de salles correspond au nombre de disponibilités
+assert len(salles_data) == len(disponibilite_data)
+
+# Associer chaque salle à sa disponibilité respective
+salles_with_disponibilite = []
+for salle, disponibilite in zip(salles_data, disponibilite_data):
+    salle['disponibilite'] = disponibilite['availability']
+    salles_with_disponibilite.append(salle)
+
+# Écrire les données mises à jour dans un nouveau fichier JSON
+with open('salles_with_disponibilite.json', 'w') as f:
+    json.dump(salles_with_disponibilite, f, indent=2)
+
+print("Les disponibilités ont été ajoutées aux salles avec succès.")
+# Charger les données du fichier JSON résultant
+with open('salles_with_disponibilite.json', 'r') as f:
+    salles_with_disponibilite_data = json.load(f)
+
+# Afficher le contenu du fichier JSON résultant
+print(json.dumps(salles_with_disponibilite_data, indent=2))
+
+
+
+affecter une priorite a chaque module pour tout les profs :
+
+import json
+import sys
+import io
+
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+
+def assign_module_priority(data):
+    for prof in data:
+        modules = prof.get('modules', [])
+        prof['modules'] = [{'priority': i, 'nom_module': module} for i, module in enumerate(modules, start=1)]
+    return data
+
+# Charger les données depuis le fichier JSON
+with open('FaculteInfo.Profs.json',encoding='utf-8') as f:
+    data = json.load(f)
+
+# Appeler la fonction pour ajouter les priorités aux modules pour chaque professeur
+data_with_priorities = assign_module_priority(data)
+
+# Afficher le résultat
+print(json.dumps(data_with_priorities, indent=4, ensure_ascii=False))
+
+

@@ -1,0 +1,131 @@
+{
+  "2INGA": {
+    "schedule": [],
+    "capacity": 50
+  },
+  "2INGB": {
+    "schedule": [],
+    "capacity": 60
+  },
+  "1INGA": {
+    "schedule": [],
+    "capacity": 50
+  },
+  "1INGB": {
+    "schedule": [],
+    "capacity": 60
+  },
+  "1INGC": {
+    "schedule": [],
+    "capacity": 60
+  },
+  "1LMD1": {
+    "schedule": [],
+    "capacity": 50
+  },
+  "1LMD2": {
+    "schedule": [],
+    "capacity": 60
+  },
+  "1LMD3": {
+    "schedule": [],
+    "capacity": 60
+  },
+  "1LMD4": {
+    "schedule": [],
+    "capacity": 50
+  },
+  "1LMD5": {
+    "schedule": [],
+    "capacity": 60
+  },
+  "1LMD6": {
+    "schedule": [],
+    "capacity": 60
+  },
+  "1MATHA": {
+    "schedule": [],
+    "capacity":60
+  },
+  "1MATHB": {
+    "schedule": [],
+    "capacity":60
+  },
+  "1MATHC": {
+    "schedule": [],
+    "capacity":60
+  },
+  "2ISILA": {
+    "schedule": [],
+    "capacity": 50
+  },
+  "2ISILB": {
+    "schedule": [],
+    "capacity": 60
+  },
+  "2ACADA": {
+    "schedule": [],
+    "capacity": 50
+  },
+  "2ACADB": {
+    "schedule": [],
+    "capacity": 60
+  },
+  "2ACADC": {
+    "schedule": [],
+    "capacity": 60
+  },
+  "2GTRA": {
+    "schedule": [],
+    "capacity": 50
+  },
+  "3GTRA": {
+    "schedule": [],
+    "capacity": 50
+  },
+  "3ISILA": {
+    "schedule": [],
+    "capacity": 50
+  },
+  "3ISILB": {
+    "schedule": [],
+    "capacity": 50
+  },
+  "3ACADA": {
+    "schedule": [],
+    "capacity": 50
+  },
+  "3ACADB": {
+    "schedule": [],
+    "capacity": 50
+  },
+  "4HPC": {
+    "schedule": [],
+    "capacity": 50
+  },
+  "4BIGDATA": {
+    "schedule": [],
+    "capacity": 50
+  },
+  "4BIOINFO": {
+    "schedule": [],
+    "capacity": 50
+  },
+  "4IL": {
+    "schedule": [],
+    "capacity": 50
+  },
+  "4IV": {
+    "schedule": [],
+    "capacity": 50
+  },
+  "4SII": {
+    "schedule": [],
+    "capacity": 50
+  },
+  "4SSI": {
+    "schedule": [],
+    "capacity": 50
+  }
+
+}

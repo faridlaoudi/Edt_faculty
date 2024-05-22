@@ -1,0 +1,55 @@
+-info ing 1 : [ algebre , analyse , algo 1 , archi 1  , Introduction aux systèmes d’exploitation 1 , TCE , Bureautique et Web ]
+
+-L1 math : [ algebre , algo , analyse , term , strm , physique ]
+
+-L1 info : [ algebre , algo 1 , analyse , strm1, physique ] 
+
+-SIGL : [ algebre , algo , analyse , strm , physique ] 
+
+-info ing 2 : [ Algorithmique et complexité , proba 2 , archi 2 , algebre 3 , poo , analyse 3 , sfsd , Entreprenariat ] 
+
+-L2 ACAD : [ archi 1 , algo 3 , anglais , logique , Analyse numerique , proba , si ]
+
+-L2 ISIL : [ archi 1 , algo 3 , anglais , logique , analyse numerique , proba , si , poo ]
+
+-L2 GTR : [ Electronique analogique , Electronique numérique , anglais , Transmissions réseaux et codage d’information. , Utilisation et administration des systèmes d’exploitation , Algo. & structures de données ou Electromagnétisme ] 
+
+-L3 ACAD : [ compilation , Systèmes d’exploitation2 , Génie Logiciel et POO , reseaux , anglais , Théorie des graphes , option ]
+
+-L3 ISIL : [ compilation , Système d’exploitation 2 , Génie Logiciel 2 , si 2 , reseaux , anglais , Bases de Données 2 ] 
+
+-L3 GTR : [ Administration réseaux , Programmation Web , Réseaux et communication sans fil , Syst. de communication analogiques et numériques , Systèmes de Télécom. et interopérabilité des réseaux , Téléphonie, Téléphonie mobile et IP , Théorie de l’info. caractérisation de la transmission ] 
+
+-M1 bigdata : [Théorie de l’ordonnancement , Veille Technolpgie , graphes et big data , Gestion de projet , anglais , Stratégie de sécurité pour l’aide à la décision , Programmation avancée , Optimisation linéaire (option) , poo , Bases de Données(Option) , calcul de probabilités et statistique inférentielle (option) ] 
+
+-M1 bioinfo : [ Algorithmique Avancée et Complicité , SPS : Système et Programmation de Scripts , GPR : Gestion de Projet , BIOMATH : Biomathématique , anglais , BIOGEN : Bioinfo et Génomique , BIOSTAT : Biostatistique ] 
+
+-M1 hpc : [ Algorithmique Avancée et Complexité , Systèmes d’exploitation , Architectures Avancées , Bases de données Avancées , anglais , Mathématiques appliquées (Analyse numérique) , modelisation et simulation ]
+
+-M1 il : [ Algorithmique Avancée et Complexité , Systèmes d’exploitation , Gestion de Projets de Logiciels , Architecture et Administration de bases de Données , anglais , p web avancee , Modélisation et évaluation des performances des systèmes ] 
+
+-M1 iv : [ Algorithmes Avancé et Complexité , Systèmes d’exploitation , Traitement et analyse d’images , Architecture des Bases de données , anglais , Résolution de problèmes , Communication Multimédia ]
+
+-M1 rsd : [ Algorithmique Avancée et Complexité ,Systèmes d’exploitation , Gestion de Projet de Développement de Logiciels , Architecture et Administration de SGBD , anglais ,Réseaux et Protocoles , Modélisation et Evaluation de Performances des Systèmes ] 
+
+-M1 sii : [ Algorithmique Avancée et Complexité , Systèmes d’exploitation , Compilation : génération du code et optimisation , Architecture et administration des réseaux , anglais , Résolution de problèmes  , Modélisation et évaluation des performances des systèmes ] 
+
+-M1 ssi : [ Complexité algorithmique , Systèmes d’exploitation , Architectures des réseaux informatiques , Veille technologique et Bases de données avancées , anglais , Introduction à la sécurité informatique , Arithmétique modulaire , Aspects juridiques dans la sécurité informatique ]
+
+-M2 bigdata : [ TIAD : Technologies de l’IA appliquées aux données , anadiss ( Analyse discriminante et
+segmentation ) , anglais , BDABD : Bases de Données Avancées et Big Data , TBI-SIG : Technologies Business Intelligence , OPTDIS : Optimisation discrète  ,SOLO : Solveurs pour l’optimisation  , DESIN : Décision dans l’incertain ]
+
+-M2 bioinfo : [ BSD : Biométrie et Sécurisation de Données , FD2: Fouille de Données2 , anglais , MCA: Méthodes Conceptuelles d’Analyse , SE: Système Embarqués , ACP: Architecture et Calcul Parallèle , VDRA: Visualisation de Données et réalité Augmentée ]
+
+-M2 hpc : [ Administration et Gestion des grilles de calcul , Calcul Embarqué , anglais , Construction de systèmes Parallèles , Systèmes d'exploitation des ordinateurs multiprocesseurs , Imagerie Médicale et Parallélisme , Programmation Multi-Cœurs , Techniques de modélisation en traitement du signal , Techniques de modélisation et de
+traitement en mécanique des fluides ] 
+
+-M2 il : [ Assurance Qualité des Logiciels , Systèmes Décisionnels et Entrepôts , anglais , Représentation des Connaissances , Méthodologie et Processus de Développement de Logiciels , Systèmes d’Information Coopératifs , Concepts Avancés du Génie Logiciel ] 
+
+-M2 iv : [ Visualisation de données , Représentation de connaissances et raisonnement , Théorie des jeux  , Gestion de projet , Programmation réseau , Synthèses d’images , Systèmes d’exploitation Mobiles ] 
+
+-M2 rsd : [ Réseaux sans fil , Calcul parallèle et grilles de calcul , anglais , Réseaux Mobiles , Construction d’applications réparties , Vision artificielle , Systèmes d’exploitation distribués , Réseaux et Protocoles , Systèmes embarqués et applications en environnement mobile ]
+
+-M2 sii : [ Vision artificielle , Programmation par contraintes  , anglais , Représentation de connaissances et raisonnement 2 , Data Mining , Recherche d’information , Traitement automatique du langage naturel ]
+
+-M2 ssi : [ Sécurité système avancée , Sécurité applicative , Sécurité et contrôle du trafic réseau , Méthodes pratiques et outils de détection d’intrusions , Audit de sécurité , Modélisation des systèmes communicants , Méthodes d’optimisation , Programmation et sûreté des systèmes répartis ]
