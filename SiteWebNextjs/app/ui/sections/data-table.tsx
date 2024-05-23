@@ -63,10 +63,12 @@ export function DataTable<TData, TValue>({
       <div className="flex items-center py-4 bg-white px-5 w-full relative">
         <SearchIcon className="w-4 h-5 absolute left-7 top-4.5 text-gray-500 dark:text-gray-400" />
         <Input
-          placeholder="Rechercher Sections..."
-          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+          placeholder="Rechercher specialite..."
+          value={
+            (table.getColumn("speciality")?.getFilterValue() as string) ?? ""
+          }
           onChange={(event: { target: { value: any } }) =>
-            table.getColumn("name")?.setFilterValue(event.target.value)
+            table.getColumn("speciality")?.setFilterValue(event.target.value)
           }
           className="max-w-sm bg-inherit pl-10"
         />

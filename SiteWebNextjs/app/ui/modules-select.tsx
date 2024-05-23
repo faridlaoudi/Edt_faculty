@@ -36,7 +36,7 @@ const MultipleSelectorModules = ({
   const handleValuesChange = (newValues: string[]) => {
     const updatedModules = newValues.map((val, index) => ({
       moduleName: val,
-      priority: index + 1,
+      priority: index + 1, 
     }));
 
     setValue(updatedModules);

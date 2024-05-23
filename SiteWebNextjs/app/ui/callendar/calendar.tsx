@@ -65,7 +65,7 @@ const Calendar: FC<CalendarProps> = ({
 
   return (
     <div className="flex justify-center items-center flex-col text-[#556476]">
-      <div className="max-h-[701px] bg-white">
+      <div className=" bg-white">
         <table className="table-auto border-collapse border">
           <thead className="bg-[#FAFAFA]">
             <tr>

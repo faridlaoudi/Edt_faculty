@@ -1,8 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 import { upsertConfiguration } from "../configuration-util";
-import { NextApiRequest, NextApiResponse } from "next";
-import { usePathname } from "next/navigation";
 
 const prisma = new PrismaClient();
 

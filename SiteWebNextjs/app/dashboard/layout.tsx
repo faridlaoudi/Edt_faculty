@@ -20,14 +20,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       <div className=" bg-white">
         <SideBar />
         <div className="flex items-center">
-          <Button
-            variant="ghost"
-            onClick={() => signOut()}
-            className='text-red-400 flex items-center gap-3'
-          >
-            <LogOutIcon />
-            <span>Déconnexion</span>
-          </Button>
+         
         </div>
       </div>
       <div className="flex-4">{children}</div>

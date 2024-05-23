@@ -10,6 +10,7 @@ import Room from "../ui/icon/room";
 import { useAppContext } from "../store/context";
 import { useSession, getSession } from "next-auth/react";
 import { redirect } from "next/navigation";
+import Loading from "../ui/icon/loading";
 
 const DashboardPage = () => {
   const { data: session, status } = useSession();
@@ -23,8 +24,10 @@ const DashboardPage = () => {
     sections,
     teachers,
     amphi,
+    loading,
     classValue: salles,
     randomTeachers,
+    loadingTeachers: isLoding,
   } = useAppContext();
   //turn the values to string
   const sectionsValue = sections.toString();
@@ -101,10 +104,14 @@ const DashboardPage = () => {
 
   return (
     <PageContainer>
-      <div>
-        <h1 className="font-[600] text-[40px] text-left my-[30px] ">
-          Dashboard
-        </h1>
+      <>
+        <div className="flex gap-4 items-center">
+          <h1 className="font-[600] text-[40px] text-left my-[30px] ">
+            Dashboard
+          </h1>
+          {isLoding && <Loading color="fill-[#001D74]" />}
+        </div>
+
         <div className="flex gap-7 flex-col lg:flex-row justify-between items-center w-full">
           <div className="lg:w-2/3 ">
             <div className="grid lg:grid-cols-2 lg:grid-rows-2 grid-cols-1 grid-rows-1 gap-7">
@@ -119,10 +126,10 @@ const DashboardPage = () => {
             </div>
           </div>
           <div className="lg:w-1/3  flex justify-center h-fullr">
-            <MiniTable teacherList={randomTeachers} />
+            <MiniTable teacherList={randomTeachers} isLoading={isLoding} />
           </div>
         </div>
-      </div>
+      </>
       <div>
         <h1 className="font-[600] text-[40px] text-left my-[30px]">Tasks</h1>
         <div className="flex gap-7 flex-col lg:flex-row justify-center items-center w-full mb-5">

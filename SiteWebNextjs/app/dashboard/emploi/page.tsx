@@ -90,9 +90,26 @@ const ParentComponent = () => {
     generatePDF(infoData, selectedYear, selectedSpecialty, selectedSection);
   };
 
+  const getYearLabel = (year) => {
+    switch (year) {
+      case 1:
+        return "1ère année";
+      case 2:
+        return "2ème année";
+      case 3:
+        return "3ème année";
+      case 4:
+        return "4ème année";
+      case 5:
+        return "5ème année";
+      default:
+        return `${year}ème année`;
+    }
+  };
+
   return (
     <PageContainer>
-      <div className="flex flex-col">
+      <div className="flex flex-col ">
         <div className="flex justify-between items-center">
           <div className="flex flex-col my-[30px]">
             <h1 className="font-[600] text-[40px] text-left">
@@ -134,7 +151,7 @@ const ParentComponent = () => {
                   <SelectLabel>Année</SelectLabel>
                   {data.map(({ year }) => (
                     <SelectItem key={year} value={year.toString()}>
-                      {year}
+                      {getYearLabel(year)}
                     </SelectItem>
                   ))}
                 </SelectGroup>

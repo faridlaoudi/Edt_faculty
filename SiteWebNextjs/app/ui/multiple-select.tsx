@@ -20,18 +20,21 @@ interface MultipleSelectorDataProps {
   onValuesChange: (values: string[]) => void;
 }
 
-const MultipleSelectorModules = ({
+const MultipleSelectorDays = ({
   options,
   onValuesChange,
   initialValues = [],
   className,
 }: MultipleSelectorDataProps) => {
-  const [value, setValue] = React.useState<string[]>(initialValues);
-
+  // turn the first letter of the day to uppercase
+  const initial = initialValues.map(
+    (value) => value.charAt(0).toUpperCase() + value.slice(1)
+  );
+  const [value, setValue] = React.useState<string[]>(initial);
 
   return (
     <MultiSelector
-      className={`bg-white rounded-md shadow-sm ${className}`}
+      className={`bg-white rounded-md shadow-sm `}
       values={value}
       onValuesChange={(newValues) => {
         setValue(newValues);
@@ -39,7 +42,7 @@ const MultipleSelectorModules = ({
       }}
       loop={false}
     >
-      <MultiSelectorTrigger className="w-full h-[52px] p-0 m-0">
+      <MultiSelectorTrigger className={` w-full h-[52px] p-0 m-0 ${className}`}>
         <MultiSelectorInput className="h-full w-full border-none bg-transparent pl-3 placeholder-gray-400" />
       </MultiSelectorTrigger>
       <MultiSelectorContent className="bg-white border border-t-0 rounded-b-md">
@@ -59,4 +62,4 @@ const MultipleSelectorModules = ({
   );
 };
 
-export default MultipleSelectorModules;
+export default MultipleSelectorDays;

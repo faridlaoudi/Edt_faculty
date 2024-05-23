@@ -24,6 +24,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import Loading from "../icon/loading";
 
 const AddRoomModal = () => {
   const [roomData, setRoomData] = useState({
@@ -39,6 +40,8 @@ const AddRoomModal = () => {
     capacite: "",
     disponibilite: "",
   });
+
+  const [isAdding, setIsAdding] = useState(false);
 
   const schema = z.object({
     nom: z.string().nonempty(),
@@ -65,6 +68,7 @@ const AddRoomModal = () => {
   const addHandler = async () => {
     try {
       // Validate form data
+      setIsAdding(true);
       const validatedData = schema.parse(roomData);
       console.log("Add Room:", validatedData);
       // Here you can send the validatedData to your backend or perform any other actions
@@ -79,6 +83,7 @@ const AddRoomModal = () => {
         capacite: "",
         disponibilite: "",
       });
+      location.reload();
     } catch (error) {
       if (error instanceof z.ZodError) {
         console.error("Validation failed:", error.errors);
@@ -93,6 +98,7 @@ const AddRoomModal = () => {
         // Handle other errors
       }
     }
+    setIsAdding(false);
   };
 
   const daysArray = [
@@ -143,11 +149,6 @@ const AddRoomModal = () => {
                   value={roomData.nom}
                   onChange={handleChange}
                 />
-                {/* {validationErrors.nom && (
-                  <span className="text-red-500 text-sm absolute bottom-[-18px] left-0">
-                    {validationErrors.nom}
-                  </span>
-                )} */}
               </div>
             </div>
             <div className="flex flex-col w-[50%]">
@@ -174,11 +175,6 @@ const AddRoomModal = () => {
                   </SelectGroup>
                 </SelectContent>
               </Select>
-              {/* {validationErrors.type && (
-                 <span className="text-red-500 text-sm">
-                   {validationErrors.type}
-                 </span>
-              )} */}
             </div>
           </div>
           <div className="flex justify-between items-center gap-8">
@@ -198,11 +194,6 @@ const AddRoomModal = () => {
                   value={roomData.capacite}
                   onChange={handleChange}
                 />
-                {/* {validationErrors.capacite && (
-                   <span className="text-red-500 text-sm absolute bottom-[-18px] left-0">
-                     {validationErrors.capacite}
-                   </span>
-                )} */}
               </div>
             </div>
             <div className="flex flex-col w-[50%]">
@@ -213,17 +204,17 @@ const AddRoomModal = () => {
                 options={daysArray}
                 onValuesChange={(values) => daysHandler(values)}
               />
-              {/* {validationErrors.disponibilite && (
-                 <span className="text-red-500 text-sm">
-                   {validationErrors.disponibilite}
-                 </span>
-              )} */}
             </div>
           </div>
         </div>
         <DialogFooter className=" ">
-          <Button type="submit" className="text-white" onClick={addHandler}>
-            Sauvegarder
+          <Button
+            type="submit"
+            className="text-white w-[138px]"
+            onClick={addHandler}
+            disabled={isAdding}
+          >
+            {isAdding ? <Loading color="fill-blue-600" /> : "Sauvegarder"}
           </Button>
         </DialogFooter>
       </DialogContent>

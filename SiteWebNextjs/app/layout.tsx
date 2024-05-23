@@ -29,7 +29,6 @@ export default function RootLayout({
             <div className="flex flex-col w-screen">
               <Navbar />
               {children}
-              
             </div>
           </AppContextProvider>
         </body>

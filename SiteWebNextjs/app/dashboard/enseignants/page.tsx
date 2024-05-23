@@ -13,16 +13,17 @@ const EnseignantsPage = () => {
   const data: Teacher[] = enseignant.map((enseignant: Teacher) => {
     return {
       id: enseignant.id,
-      nom: `${enseignant.nom} ${enseignant.prenom}`,
+      nom: `${enseignant.nom}`,
       email: enseignant.email,
-      // make year yy:mm:dd
-      date_de_naissance: new Date(
-        enseignant.date_de_naissance
-      ).toLocaleDateString(),
-
+      date_de_naissance: new Date(enseignant.date_de_naissance)
+        .toISOString()
+        .split("T")[0],
+      gender: enseignant.gender,
+      availability_prof: enseignant.availability_prof,
       numero_de_telephone: enseignant.numero_de_telephone,
       prenom: enseignant.prenom,
       phone: enseignant.numero_de_telephone,
+      modules: enseignant.modules,
       grade: enseignant.grade,
     };
   });

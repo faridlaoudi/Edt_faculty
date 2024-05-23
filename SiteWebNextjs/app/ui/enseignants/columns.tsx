@@ -5,16 +5,7 @@ import { MoreHorizontal, ArrowUpDown, Edit3, Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 
-import {
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 
 import {
   DropdownMenu,
@@ -30,10 +21,10 @@ import EmailIcon from "../icon/email-icon";
 import StarIcon from "../icon/star-icon";
 import PhoneIcon from "../icon/phone-icon";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
-import { Clipboard } from "lucide-react";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Loading from "../icon/loading";
+import ModifyEnseignantDialog from "./modify-user-modal";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -43,9 +34,11 @@ export type Teacher = {
   prenom: string;
   email: string;
   numero_de_telephone: string;
+  gender: string;
+  availability_prof: [];
   date_de_naissance: string;
+  modules: [];
   grade: string;
-  phone: string;
 };
 
 export const columns: ColumnDef<Teacher>[] = [
@@ -124,7 +117,7 @@ export const columns: ColumnDef<Teacher>[] = [
     cell: ({ row }) => (
       <div className="flex gap-2 items-center ">
         <PhoneIcon />
-        <span>{row.original.phone}</span>
+        <span>{row.original.numero_de_telephone}</span>
       </div>
     ),
   },
@@ -134,8 +127,6 @@ export const columns: ColumnDef<Teacher>[] = [
     header: "Actions",
     cell: ({ row }) => {
       const payment = row.original;
-
-      const router = useRouter();
 
       const [showConfirmationModal, setShowConfirmationModal] = useState(false);
       const [isDeleting, setIsDeleting] = useState<boolean>(false);
@@ -180,7 +171,7 @@ export const columns: ColumnDef<Teacher>[] = [
             },
           });
 
-          router.refresh();
+          location.reload();
         } catch (error) {
           console.error("Failed to delete room", error);
           return;
@@ -197,113 +188,11 @@ export const columns: ColumnDef<Teacher>[] = [
 
       return (
         <>
-          <Dialog
-            open={isEditDialogOpen}
-            onOpenChange={(open) => setIsEditDialogOpen(open)}
-          >
-            <DialogContent className="sm:max-w-[800px] bg-white">
-              <DialogHeader>
-                <DialogTitle className="text-[28px] text-[#001D74] ">
-                  Modifier Enseignant
-                </DialogTitle>
-              </DialogHeader>
-              <div className="py-[20px] text-black flex flex-col gap-6 text-left border-b-[1px] border-gray-200">
-                <div className="flex justify-between items-center gap-8">
-                  <div className="flex flex-col w-[50%] text-left">
-                    <Label className="text-[20.051px] font-[400] my-3">
-                      Prenom
-                    </Label>
-                    <Input
-                      className="w-full h-[52px]"
-                      placeholder={payment.prenom}
-                    />
-                  </div>
-                  <div className="flex flex-col w-[50%]">
-                    <Label className="text-[20.051px] font-[400] my-3">
-                      Nom
-                    </Label>
-                    <Input
-                      className="w-full h-[52px]"
-                      placeholder={payment.nom}
-                    />
-                  </div>
-                </div>
-                <div className="flex justify-between items-center gap-8">
-                  <div className="flex flex-col w-[50%] text-left">
-                    <Label className="text-[20.051px] font-[400] my-3">
-                      Email
-                    </Label>
-                    <Input
-                      className="w-full h-[52px]"
-                      placeholder={payment.email}
-                    />
-                  </div>
-                  <div className="flex flex-col w-[50%]">
-                    <Label className="text-[20.051px] font-[400] my-3">
-                      Numero de telephone
-                    </Label>
-                    <Input
-                      className="w-full h-[52px]"
-                      placeholder={payment.numero_de_telephone}
-                    />
-                  </div>
-                </div>
-                <div className="flex justify-between items-center gap-8">
-                  <div className="flex flex-col w-[50%]">
-                    <Label className="text-[20.051px] font-[400] my-3">
-                      Grade
-                    </Label>
-                    <Input
-                      className="w-full h-[52px]"
-                      placeholder={payment.grade}
-                    />
-                  </div>
-                  <div className="flex flex-col w-[50%]">
-                    <div className="flex flex-col w-[50%]">
-                      <Label className="text-[20.051px] font-[400] my-3">
-                        Date de Naissance
-                      </Label>
-                      <Input
-                        className="w-full h-[52px]"
-                        placeholder={payment.date_de_naissance}
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div className="flex justify-between items-center gap-8">
-                  <div className="flex flex-col w-[50%]">
-                    <Label className="text-[20.051px] font-[400] my-3">
-                      Jours de disponibilité
-                    </Label>
-                    <Input
-                      className="w-full h-[52px]"
-                      placeholder={payment.grade}
-                    />
-                  </div>
-                  <div className="flex flex-col w-[50%]">
-                    <div className="flex flex-col w-[50%]">
-                      <Label className="text-[20.051px] font-[400] my-3">
-                        Modules prioritères
-                      </Label>
-                      <Input
-                        className="w-full h-[52px]"
-                        placeholder={payment.date_de_naissance}
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <DialogFooter>
-                <Button
-                  type="submit"
-                  className="text-white "
-                  onClick={updateHandler}
-                >
-                  Sauvegarder
-                </Button>
-              </DialogFooter>
-            </DialogContent>
-          </Dialog>
+          <ModifyEnseignantDialog
+            isOpen={isEditDialogOpen}
+            onClose={(open: boolean) => setIsEditDialogOpen(open)}
+            enseignant={payment}
+          />
 
           <Dialog
             open={isDeleteDialogOpen}
@@ -338,11 +227,15 @@ export const columns: ColumnDef<Teacher>[] = [
                 </Button>
                 <Button
                   variant="destructive"
-                  className="text-[16px]"
+                  className="text-[16px] w-[138px]"
                   onClick={handleDelete}
                   disabled={isDeleting}
                 >
-                  {isDeleting ? <Loading /> : "Oui, je suis sure"}
+                  {isDeleting ? (
+                    <Loading color="fill-red-600" />
+                  ) : (
+                    "Oui, je suis sure"
+                  )}
                 </Button>
               </div>
             </DialogContent>

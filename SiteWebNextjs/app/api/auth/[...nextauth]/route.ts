@@ -39,7 +39,6 @@ export const authOptions: NextAuthOptions = {
 
         const isPasswordValid = user.password === credentials.password;
 
-
         if (!isPasswordValid) {
           return null;
         }
@@ -47,8 +46,8 @@ export const authOptions: NextAuthOptions = {
         return {
           id: user.id + "",
           email: user.email,
-          name: user.name,
-          randomKey: "Hey cool",
+          name: user.nom,
+          randomKey: "Welcome to the club!",
         };
       },
     }), // Remove the trailing comma here

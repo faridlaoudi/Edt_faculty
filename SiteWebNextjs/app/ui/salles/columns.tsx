@@ -80,10 +80,6 @@ export const columns: ColumnDef<Room>[] = [
     cell: ({ row }) => {
       const payment = row.original;
 
-      const router = useRouter();
-      const path = usePathname();
-
-      const [showConfirmationModal, setShowConfirmationModal] = useState(false);
       const [isDeleting, setIsDeleting] = useState<boolean>(false);
 
       const [isEditDialogOpen, setIsEditDialogOpen] = useState<boolean>(false);
@@ -162,7 +158,11 @@ export const columns: ColumnDef<Room>[] = [
                   onClick={handleDelete}
                   disabled={isDeleting}
                 >
-                  {isDeleting ? <Loading /> : "Oui, je suis sure"}
+                  {isDeleting ? (
+                    <Loading color="fill-red-600" />
+                  ) : (
+                    "Oui, je suis sure"
+                  )}
                 </Button>
               </div>
             </DialogContent>

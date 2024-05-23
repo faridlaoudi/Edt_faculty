@@ -21,6 +21,8 @@ import {
 } from "@/components/ui/select";
 
 import MultipleSelectorData from "../multiple-select";
+import { set } from "date-fns";
+import Loading from "../icon/loading";
 
 type RoomEditDialogProps = {
   isOpen: boolean;
@@ -52,6 +54,8 @@ const RoomEditDialog = ({ isOpen, onClose, payment }: RoomEditDialogProps) => {
     disponibilite: payment.disponibilite,
   });
 
+  const [isModify, setIsModify] = useState(false);
+
   console.log(roomData);
 
   const [validationErrors, setValidationErrors] = useState({
@@ -66,7 +70,7 @@ const RoomEditDialog = ({ isOpen, onClose, payment }: RoomEditDialogProps) => {
     capacite: z.string().nonempty(),
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement> | string) => {
     if (typeof e === "string") {
       setRoomData((prevData) => ({
         ...prevData,
@@ -103,9 +107,8 @@ const RoomEditDialog = ({ isOpen, onClose, payment }: RoomEditDialogProps) => {
   };
 
   const handleUpdate = async () => {
-    console.log("roomData", roomData);
-
     try {
+      setIsModify(true);
       // Validate form data
       await schema.parse(roomData);
       // Here you can send the validatedData to your backend or perform any other actions
@@ -113,13 +116,15 @@ const RoomEditDialog = ({ isOpen, onClose, payment }: RoomEditDialogProps) => {
         method: "PUT",
         body: JSON.stringify(roomData),
       });
-
       // Clear validation errors
       setValidationErrors({
         nom: "",
         type: "",
         capacite: "",
       });
+      // Close the dialog after successful update
+      location.reload();
+      onClose(false);
     } catch (error) {
       if (error instanceof z.ZodError) {
         // Handle validation errors
@@ -134,6 +139,7 @@ const RoomEditDialog = ({ isOpen, onClose, payment }: RoomEditDialogProps) => {
         console.error("An unexpected error occurred:", error);
       }
     }
+    setIsModify(false);
   };
 
   return (
@@ -159,11 +165,6 @@ const RoomEditDialog = ({ isOpen, onClose, payment }: RoomEditDialogProps) => {
                 onChange={handleChange}
                 onFocus={() => handleFocus("nom")}
               />
-              {/* {validationErrors.nom && (
-                <span className="text-red-500 text-sm">
-                  {validationErrors.nom}
-                </span>
-              )} */}
             </div>
             <div className="flex flex-col w-[50%]">
               <Label className="text-[20.051px] font-[400] my-3">
@@ -189,20 +190,6 @@ const RoomEditDialog = ({ isOpen, onClose, payment }: RoomEditDialogProps) => {
                   </SelectGroup>
                 </SelectContent>
               </Select>
-              {/* <Input
-                className={`w-full h-[52px] border ${
-                  validationErrors.type ? "border-red-500" : "border-gray-200"
-                }`}
-                name="type"
-                value={roomData.type}
-                onChange={handleChange}
-                onFocus={() => handleFocus("nom")}
-              /> */}
-              {/* {validationErrors.type && (
-                <span className="text-red-500 text-sm">
-                  {validationErrors.type}
-                </span>
-              )} */}
             </div>
           </div>
           <div className="flex justify-between items-center gap-8">
@@ -222,35 +209,28 @@ const RoomEditDialog = ({ isOpen, onClose, payment }: RoomEditDialogProps) => {
                 onChange={handleChange}
                 onFocus={() => handleFocus("nom")}
               />
-              {/* {validationErrors.capacite && (
-                <span className="text-red-500 text-sm">
-                  {validationErrors.capacite}
-                </span>
-              )} */}
             </div>
             <div className="flex flex-col w-[50%] text-left">
               <Label className="text-[20.051px] font-[400] my-3">
                 Disponibilite
               </Label>
-
               <MultipleSelectorData
                 options={daysArray}
                 initialValues={roomData.disponibilite}
                 onValuesChange={(values) => daysHandler(values)}
                 className={"w-full"}
               />
-
-              {/* {validationErrors.disponibilite && (
-                 <span className="text-red-500 text-sm">
-                   {validationErrors.disponibilite}
-                 </span>
-              )} */}
             </div>
           </div>
         </div>
         <DialogFooter className="flex justify-between">
-          <Button type="submit" className="text-white" onClick={handleUpdate}>
-            Sauvegarder
+          <Button
+            type="submit"
+            className="text-white w-[138px]"
+            onClick={handleUpdate}
+            disabled={isModify}
+          >
+            {isModify ? <Loading color="fill-blue-600" /> : "Sauvegarder"}
           </Button>
         </DialogFooter>
       </DialogContent>

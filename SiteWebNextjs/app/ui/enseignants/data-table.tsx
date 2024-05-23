@@ -96,7 +96,7 @@ export function DataTable<TData, TValue>({
                 <TableRow key={index}>
                   {columns.map((column, colIndex) => (
                     <TableCell key={colIndex}>
-                      {colIndex < 7 ? (
+                      {colIndex < 6 ? (
                         <Skeleton className="h-8 " />
                       ) : (
                         <span>&nbsp;</span>
